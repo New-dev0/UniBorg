@@ -11,10 +11,10 @@ from datetime import datetime
 DELETE_TIMEOUT = 5
 
 
-@borg.on(slitu.admin_cmd(pattern="load (?P<shortname>\w+)$"))  # pylint:disable=E0602
+@borg.on(slitu.admin_cmd(pattern="load ?(.*)$"))  # pylint:disable=E0602
 async def load_reload(event):
     await event.delete()
-    shortname = event.pattern_match["shortname"]
+    shortname = event.pattern_match.group(1)
     try:
         if shortname in borg._plugins:  # pylint:disable=E0602
             borg.remove_plugin(shortname)  # pylint:disable=E0602
